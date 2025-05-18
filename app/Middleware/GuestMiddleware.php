@@ -14,6 +14,6 @@ final class GuestMiddleware implements MiddlewareInterface
             return $next($request);
         }
 
-        respond()->redirect('/');
+        respond()->redirect(route('dashboard'));
     }
 }

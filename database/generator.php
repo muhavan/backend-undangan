@@ -1,8 +1,8 @@
 <?php
 
+use Core\Database\DB;
 use Core\Database\Generator;
 use App\Models\User;
-use Core\Valid\Hash;
 
 return new class implements Generator
 {
@@ -13,10 +13,17 @@ return new class implements Generator
      */
     public function run()
     {
+        foreach (['admin', 'user'] as $value) {
+            DB::table('roles')->create([
+                'level' => $value
+            ]);
+        }
+
         User::create([
-            'nama' => 'User',
-            'email' => 'user@example.com',
-            'password' => Hash::make('12345678')
+            'nama' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => password_hash('admin123', PASSWORD_BCRYPT),
+            'role_id' => 1
         ]);
     }
 };

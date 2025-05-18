@@ -34,7 +34,7 @@ final class Kernel
     /**
      * Registrasi service agar bisa dijalankan.
      *
-     * @return array
+     * @return array<class-string>
      */
     public function services(): array
     {
@@ -47,14 +47,14 @@ final class Kernel
     /**
      * Kumpulan middleware yang dijalankan lebih awal.
      *
-     * @return array
+     * @return array<class-string>
      */
     public function middlewares(): array
     {
         return [
             \App\Middleware\CorsMiddleware::class,
             \App\Middleware\XSSMiddleware::class,
-            //\App\Middleware\CsrfMiddleware::class
+            \App\Middleware\CsrfMiddleware::class
         ];
     }
 }
