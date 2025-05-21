@@ -1,43 +1,59 @@
 {
     "functions": {
-        "api/*.php": {
-            "runtime": "vercel-php@0.6.2",
-            "memory": 1024,
-            "maxDuration": 10
-        }
+      "api/*.php": {
+        "runtime": "vercel-php@0.6.2",
+        "memory": 1024,
+        "maxDuration": 10
+      }
     },
+    "headers": [
+      {
+        "source": "/api/(.*)",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "https://muhavan.github.io" },
+          { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Origin, Content-Type, Accept, Authorization, Accept-Language, X-Requested-With"
+          },
+          { "key": "Access-Control-Allow-Credentials", "value": "true" },
+          { "key": "Access-Control-Max-Age", "value": "86400" }
+        ]
+      }
+    ],
     "routes": [
-        {
-            "src": "/favicon.ico",
-            "headers": {
-                "Cache-Control": "public, max-age=31556952, immutable"
-            },
-            "dest": "/public/favicon.ico"
+      {
+        "src": "/favicon.ico",
+        "headers": {
+          "Cache-Control": "public, max-age=31556952, immutable"
         },
-        {
-            "src": "/kamu.png",
-            "headers": {
-                "Cache-Control": "public, max-age=31556952, immutable"
-            },
-            "dest": "/public/kamu.png"
+        "dest": "/public/favicon.ico"
+      },
+      {
+        "src": "/kamu.png",
+        "headers": {
+          "Cache-Control": "public, max-age=31556952, immutable"
         },
-        {
-            "src": "/robots.txt",
-            "headers": {
-                "Cache-Control": "public, max-age=31556952, immutable"
-            },
-            "dest": "/public/robots.txt"
+        "dest": "/public/kamu.png"
+      },
+      {
+        "src": "/robots.txt",
+        "headers": {
+          "Cache-Control": "public, max-age=31556952, immutable"
         },
-        {
-            "src": "/(css|js)/(.*)",
-            "headers": {
-                "Cache-Control": "public, max-age=86400, immutable"
-            },
-            "dest": "/public/$1/$2"
+        "dest": "/public/robots.txt"
+      },
+      {
+        "src": "/(css|js)/(.*)",
+        "headers": {
+          "Cache-Control": "public, max-age=86400, immutable"
         },
-        {
-            "src": "/(.*)",
-            "dest": "/api/index.php"
-        }
+        "dest": "/public/$1/$2"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/api/index.php"
+      }
     ]
-}
+  }
+  
