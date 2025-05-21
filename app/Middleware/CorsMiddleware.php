@@ -15,7 +15,7 @@ final class CorsMiddleware implements MiddlewareInterface
         
         // Daftar origin yang diizinkan
         $allowedOrigins = [
-            'https://muhava.github.io',
+            'https://muhavan.github.io',
             'http://127.0.0.1',
             'http://localhost'
         ];
