@@ -14,6 +14,7 @@ final class CorsMiddleware implements MiddlewareInterface
         $header = respond()->getHeader();
         $header->set('Access-Control-Allow-Origin', '*');
         $header->set('Access-Control-Expose-Headers', 'Authorization, Content-Type, Cache-Control, Content-Disposition');
+        $header->set('Access-Control-Allow-Credentials', 'true');
 
         $vary = $header->has('Vary') ? explode(', ', $header->get('Vary')) : [];
         $vary = array_unique([...$vary, 'Accept', 'Origin', 'User-Agent', 'Access-Control-Request-Method', 'Access-Control-Request-Headers']);
@@ -29,15 +30,14 @@ final class CorsMiddleware implements MiddlewareInterface
             return respond()->setCode(Respond::HTTP_NO_CONTENT);
         }
 
-        $header->set(
-            'Access-Control-Allow-Methods',
-            strtoupper($request->server->get('HTTP_ACCESS_CONTROL_REQUEST_METHOD', $request->method()))
-        );
+        $allowedMethods = strtoupper($request->server->get('HTTP_ACCESS_CONTROL_REQUEST_METHOD', $request->method()));
+        $header->set('Access-Control-Allow-Methods', $allowedMethods);
 
-        $header->set(
-            'Access-Control-Allow-Headers',
-            $request->server->get('HTTP_ACCESS_CONTROL_REQUEST_HEADERS', 'Origin, Content-Type, Accept, Authorization, Accept-Language')
+        $allowedHeaders = $request->server->get(
+            'HTTP_ACCESS_CONTROL_REQUEST_HEADERS',
+            'Origin, Content-Type, Accept, Authorization, Accept-Language'
         );
+        $header->set('Access-Control-Allow-Headers', $allowedHeaders);
 
         return respond()->setCode(Respond::HTTP_NO_CONTENT);
     }
