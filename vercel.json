@@ -1,4 +1,54 @@
 {
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.6.2",
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "routes": [
+    {
+      "src": "/favicon.ico",
+      "headers": {
+        "Cache-Control": "public, max-age=31556952, immutable"
+      },
+      "dest": "/public/favicon.ico"
+    },
+    {
+      "src": "/kamu.png",
+      "headers": {
+        "Cache-Control": "public, max-age=31556952, immutable"
+      },
+      "dest": "/public/kamu.png"
+    },
+    {
+      "src": "/robots.txt",
+      "headers": {
+        "Cache-Control": "public, max-age=31556952, immutable"
+      },
+      "dest": "/public/robots.txt"
+    },
+    {
+      "src": "/(css|js)/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=86400, immutable"
+      },
+      "dest": "/public/$1/$2"
+    },
+    {
+      "src": "/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Origin, Content-Type, Accept, Authorization, X-CSRF-Token, X-Access-Key",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Authorization, Content-Type, Cache-Control, Content-Disposition"
+      },
+      "dest": "/api/index.php"
+    }
+  ]
+}
+{
     "functions": {
       "api/*.php": {
         "runtime": "vercel-php@0.6.2",
@@ -6,24 +56,6 @@
         "maxDuration": 10
       }
     },
-    "headers": [
-      {
-        "source": "/api/(.*)",
-        "headers": [
-          { "key": "Access-Control-Allow-Origin", "value": "*" },
-          { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, PATCH, DELETE, OPTIONS" },
-          {
-            "key": "Access-Control-Allow-Headers",
-            "value": "Origin, Content-Type, Accept, Authorization, X-CSRF-Token, X-Access-Key"
-          },
-          { "key": "Access-Control-Allow-Credentials", "value": "true" },
-          {
-            "key": "Access-Control-Expose-Headers",
-            "value": "Authorization, Content-Type, Cache-Control, Content-Disposition"
-          }
-        ]
-      }
-    ],
     "routes": [
       {
         "src": "/favicon.ico",
@@ -55,6 +87,13 @@
       },
       {
         "src": "/(.*)",
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Origin, Content-Type, Accept, Authorization, X-CSRF-Token, X-Access-Key",
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Expose-Headers": "Authorization, Content-Type, Cache-Control, Content-Disposition"
+        },
         "dest": "/api/index.php"
       }
     ]
