@@ -1,25 +1,12 @@
-<p align="center"><img src="https://raw.githubusercontent.com/dewanakl/Kamu/main/public/kamu.png" width="200" alt="kamu"></p>
-
 <p align="center">
-<a href="https://packagist.org/packages/kamu/framework"><img src="https://img.shields.io/packagist/dt/kamu/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/kamu/framework"><img src="https://img.shields.io/packagist/v/kamu/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/kamu/framework"><img src="https://img.shields.io/packagist/l/kamu/framework" alt="License"></a>
+<img src="public/icon-384x384.png" width="200" alt="dikit">
 </p>
 
-## About Kamu
+## About Dikit Link
 
-Kamu adalah PHP framework yang sangat sederhana. Saking sederhananya, serasa di localhost!!.
-<br>
-Dibantu dengan saya console untuk mempermudah dalam development aplikasi Anda.
+Dikit Link adalah aplikasi shortlink gk ada obat dengan Kamu PHP Framework.
 
-<hr>
-
-##### Deployment API Vercel: [https://dikit.my.id/DeploymentApiVercel](https://dikit.my.id/DeploymentApiVercel)
-##### Deployment API Hosting: [https://dikit.my.id/DeploymentApiHosting](https://dikit.my.id/DeploymentApiHosting)
-
-<hr>
-
-## Deployment on vercel
+## Get Started Project
 - Clone or download this repository
     ```bash
     git clone https://github.com/dewanakl/DikitLink.git
@@ -36,39 +23,15 @@ Dibantu dengan saya console untuk mempermudah dalam development aplikasi Anda.
     ```bash
     php saya key
     ```
-- Push on your github.
-- Create new project in vercel.
-- Import from your repository.
-- Change environment variables in your project on vercel.
-- Add this :
-  - DB_HOST (your host cloud dbms) 
-  - DB_PASS (your password cloud dbms)
-  - DB_USER (your username cloud dbms)
-  - DB_NAME (your name of database cloud dbms)
-  - DB_PORT (your port cloud dbms)
-  - DB_DRIV (type cloud dbms [ex. mysql or pgsql])
-  - JWT_KEY [ex. 123]
-  - HTTPS [true]
-  - COOKIE [false]
-  - APP_KEY [copy from your local env]
-- Click deployments tab in vercel project.
-- Click the most recent deploy.
-- Click dot three and redeploy.
-- Finish.
-
-## Get Started Project
-- Create a project with composer
+- Create table in database
     ```bash
-    composer create-project kamu/kamu coba-app
-    ```
-- Move the folder
-    ```bash
-    cd coba-app
+    php saya migrasi --gen
     ```
 - Run in development server
     ```bash
     php saya coba
     ```
+
 
 ## Contributing
 
