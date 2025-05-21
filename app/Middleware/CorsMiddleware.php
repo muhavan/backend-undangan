@@ -4,24 +4,41 @@ namespace App\Middleware;
 
 use Closure;
 use Core\Http\Request;
+use Core\Http\Respond;
 use Core\Middleware\MiddlewareInterface;
 
 final class CorsMiddleware implements MiddlewareInterface
 {
     public function handle(Request $request, Closure $next)
     {
-        header('Access-Control-Allow-Origin: ' . baseurl());
-        header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization, Token');
-        header('Origin: ' . baseurl());
-        header('Vary: Accept-Encoding, Origin');
+        $header = respond()->getHeader();
+        $header->set('Access-Control-Allow-Origin', '*');
+        $header->set('Access-Control-Expose-Headers', 'Authorization, Content-Type, Cache-Control, Content-Disposition');
 
-        if ($request->method() != 'OPTIONS') {
+        $vary = $header->has('Vary') ? explode(', ', $header->get('Vary')) : [];
+        $vary = array_unique([...$vary, 'Accept', 'Origin', 'User-Agent', 'Access-Control-Request-Method', 'Access-Control-Request-Headers']);
+        $header->set('Vary', join(', ', $vary));
+
+        if (!$request->method(Request::OPTIONS)) {
             return $next($request);
         }
 
-        http_response_code(204);
-        header('HTTP/1.1 204 No Content', true, 204);
+        $header->unset('Content-Type');
+
+        if (!$request->server->has('HTTP_ACCESS_CONTROL_REQUEST_METHOD')) {
+            return respond()->setCode(Respond::HTTP_NO_CONTENT);
+        }
+
+        $header->set(
+            'Access-Control-Allow-Methods',
+            strtoupper($request->server->get('HTTP_ACCESS_CONTROL_REQUEST_METHOD', $request->method()))
+        );
+
+        $header->set(
+            'Access-Control-Allow-Headers',
+            $request->server->get('HTTP_ACCESS_CONTROL_REQUEST_HEADERS', 'Origin, Content-Type, Accept, Authorization, Accept-Language')
+        );
+
+        return respond()->setCode(Respond::HTTP_NO_CONTENT);
     }
 }

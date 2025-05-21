@@ -15,15 +15,12 @@ return new class implements Migration
     {
         Schema::create('users', function (Table $table) {
             $table->id();
-            $table->integer('role_id');
 
             $table->string('nama', 50);
             $table->string('email', 100)->unique();
             $table->string('password');
 
             $table->timeStamp();
-
-            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
         });
     }
 
